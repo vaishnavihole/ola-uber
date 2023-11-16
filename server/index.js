@@ -14,12 +14,43 @@ async function connectMongoDB() {
 }
 connectMongoDB();
 
+// health api
 app.get("/health", (req, res) => {
     res.json({
         success: true,
         message: "All Good🏆",
     });
 });
+
+// POST / Login
+app.post("/login", async (req, res) => {
+    const { email, password } = req.body
+
+    if (!email || !password) {
+        return res.json({
+            success: false,
+            message: 'please provide email and password'
+        })
+    }
+    const user = await User.findOne({
+        email: email,
+        password: password
+    })
+
+    if (user) {
+        return res.json({
+            success: true,
+            data: user,
+            message: "Login successful"
+        });
+    }
+    else {
+        return res.json({
+            success: false,
+            message: "Invalid credentials"
+        })
+    }
+})
 
 
 const PORT = process.env.PORT || 5000;
