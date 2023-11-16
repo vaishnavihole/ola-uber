@@ -14,6 +14,13 @@ async function connectMongoDB() {
 }
 connectMongoDB();
 
+app.get("/health", (req, res) => {
+    res.json({
+        success: true,
+        message: "All Good🏆",
+    });
+});
+
 
 const PORT = process.env.PORT || 5000;
 
