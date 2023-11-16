@@ -52,6 +52,45 @@ app.post("/login", async (req, res) => {
     }
 })
 
+// POST /signup
+app.post("/signup", async (req, res) => {
+    const {
+        name,
+        email,
+        password,
+        mobile,
+        address,
+        gender,
+        roll
+    } = req.body;
+
+    const user = new User({
+        name: name,
+        email: email,
+        password: password,
+        mobile: mobile,
+        address: address,
+        gender: gender,
+        roll: roll
+    });
+
+    try {
+        const savedUser = await user.save();
+
+        res.json({
+            success: true,
+            data: savedUser,
+            message: "Signup Successfully"
+        })
+    }
+    catch (err) {
+        res.json({
+            success: false,
+            message: err.message
+        })
+    }
+});
+
 
 const PORT = process.env.PORT || 5000;
 
