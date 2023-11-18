@@ -194,6 +194,19 @@ app.put("/serviceRequest/:id", async (req, res) => {
       message: "    ServiceRequest updated successfully"
     });
   });
+
+  // DELETE /product/:id
+app.delete("/serviceRequest/:id", async(req, res)=>{
+    const {id} = req.params;
+  
+    await ServiceRequest.deleteOne({_id: id});
+  
+    res.json({
+      success: true,
+      message: "ServiceRequest deleted successfully"
+    });
+  })
+  
   
 
 const PORT = process.env.PORT || 5000;
