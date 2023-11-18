@@ -160,6 +160,41 @@ app.get("/serviceRequest/:id", async (req, res) => {
     });
   });
 
+  // PUT /product/:id
+app.put("/serviceRequest/:id", async (req, res) => {
+    const {id} = req.params;
+  
+    const {
+        type,
+        description,
+        address,
+        mobile,
+        user,
+        status,
+        charges,
+        provider
+    } = req.body;
+  
+    await ServiceRequest.updateOne({_id: id}, {$set: {
+        type,
+        description,
+        address,
+        mobile,
+        user,
+        status,
+        charges,
+        provider
+    }});
+  
+    const updatedServiceRequest = await serviceRequest.findById(id);
+  
+    res.json({
+      success: true,
+      data: updatedServiceRequest,
+      message: "    ServiceRequest updated successfully"
+    });
+  });
+  
 
 const PORT = process.env.PORT || 5000;
 
