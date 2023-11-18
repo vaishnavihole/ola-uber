@@ -20,6 +20,7 @@ const serviceRequestSchema = new Schema({
       },
 
       status: {
+        type: 'String',
         default: 'pending'
       },
 
@@ -27,9 +28,9 @@ const serviceRequestSchema = new Schema({
         type: Number,
       },
 
-      provide: {
+      provider: {
         type: String,
-        default: [ ]
+        default: ' '
       }
    
 }, {

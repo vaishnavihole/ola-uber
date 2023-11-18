@@ -3,6 +3,9 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
 
+import User from './models/User.js';
+import ServiceRequest from './models/ServiceRequest.js';
+
 const app = express()
 app.use(express.json());
 
@@ -90,6 +93,72 @@ app.post("/signup", async (req, res) => {
         })
     }
 });
+
+ // GET /serviceRequest
+app.get("/serviceRequests", async (req, res) => {
+    const serviceRequests = await ServiceRequest.find();
+  
+    res.json({
+      success: true,
+      data: serviceRequests,
+      message: "ServiceRequests fetched successfully"
+    });
+  });
+
+// POST /serviceRequest
+app.post("/serviceRequest", async (req, res) => {
+    const {
+      type,
+      description,
+      address,
+      mobile,
+      user,
+      status,
+      charges,
+      provider
+    } = req.body;
+  
+  
+    const serviceRequest = new ServiceRequest({
+        type,
+        description,
+        address,
+        mobile,
+        user,
+        status,
+        charges,
+        provider
+    });
+  
+   try{
+    const savedServiceRequest = await serviceRequest.save();
+  
+    res.json({
+      success: true,
+      data: savedServiceRequest,
+      message: " serviceRequest created successfully"
+    });
+   }
+    catch(e){
+      res.json({
+        success: false,
+        message: e.message
+      });
+    }
+  });
+
+  // GET /serviceRequest/:id
+app.get("/serviceRequest/:id", async (req, res) => {
+    const {id} = req.params;
+  
+    const serviceRequest = await ServiceRequest.findById(id);
+  
+    res.json({
+      success: true,
+      data: serviceRequest,
+      message: "ServiceRequest  fetched successfully"
+    });
+  });
 
 
 const PORT = process.env.PORT || 5000;
