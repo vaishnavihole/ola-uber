@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import './Signup.css';
+import Navbar from '../../components/Navbar/Navbar';
+import Footer from '../../components/Footer/Footer';
+
+
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -24,6 +28,8 @@ const Signup = () => {
   };
 
   return (
+    <>
+    <Navbar />
     <div className="signup-container">
       <form onSubmit={handleSubmit} className="signup-form">
         <h2 className="form-title">Sign Up</h2>
@@ -81,15 +87,9 @@ const Signup = () => {
         </button>
       </form>
     </div>
+    <Footer />
+    </>
   );
 };
 
-function App() {
-  return (
-    <div className="App">
-      <Signup />
-    </div>
-  );
-}
-
-export default App;
+export default Signup;
