@@ -1,19 +1,31 @@
-import React from 'react';
-import './Navbar.css';
+import React, { useEffect, useState } from 'react';
+import "./Navbar.css";
+import { Link } from "react-router-dom";
 
+function Navbar() {
+  const [user, setUser] = useState({});
 
-const Navbar = () => {
+  useEffect(() => {
+    const storageUser = JSON.parse(localStorage.getItem("user") || '{}');
+    setUser(storageUser);
+  }, [])
+
   return (
-  
-    <nav className="navbar">
-      <ul className="nav-list">
-        <li className="nav-item">Home</li>
-        <li className="nav-item">About</li>
-        <li className="nav-item">Services</li>
-        <li className="nav-item">Contact</li>
-      </ul>
-    </nav>
-  );
-};
+    <div className="navbar">
+      <Link to="/" className="navbar-title">
+      xyz
+      </Link>
+
+      <div className='navbar-links-container'>
+        <Link to="/login" className="navbar-link">
+          Login
+        </Link>
+        <Link to="/signup" className="navbar-link">
+          Signup
+        </Link>
+      </div>
+    </div>
+  )
+}
 
 export default Navbar;
