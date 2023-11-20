@@ -13,7 +13,7 @@ function Navbar() {
   return (
     <div className="navbar">
       <Link to="/" className="navbar-title">
-      xyz
+      ola-uber
       </Link>
 
       <div className='navbar-links-container'>

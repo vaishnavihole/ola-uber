@@ -4,9 +4,9 @@ import './Footer.css';
 const Footer = () => {
   return (
     <div className="footer">
-      <p>&copy; 2023 Your Website Name</p>
+      <p>ola-uber</p>
       <p>
-        Designed by <a href="https://www.example.com">Your Name</a>
+        Designed by xyz
       </p>
     </div>
   );
