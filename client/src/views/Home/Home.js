@@ -20,6 +20,7 @@ function Home() {
           <div className='tagline-container'>
           <h1 className='tagline'>We make life of elderly people super easy by providing various services</h1> 
           </div>
+          <button type="button" className='book-btn'>Book Now</button>
         </div>
         
         <h3 className='feature-title' >Why You Should Choose Us</h3>

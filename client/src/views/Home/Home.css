@@ -55,3 +55,21 @@
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   }
 
+  .book-btn {
+   background-color: #ffcc66;
+   color: black;
+   padding: 10px 20px;
+   border: none;
+   border-radius: 5px;
+   margin-left: 180px;
+   margin-top: 5px;
+   cursor: pointer;
+  transition: background-color 0.3s ease;
+  }
+  
+  
+  .book-btn:hover {
+    background-color: #ffd480;
+  }
+  
+

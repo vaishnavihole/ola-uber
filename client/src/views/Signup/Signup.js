@@ -1,95 +1,185 @@
-import React, { useState } from 'react';
-import './Signup.css';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import "./Signup.css";
+import { Link } from "react-router-dom";
 import Navbar from '../../components/Navbar/Navbar';
-import Footer from '../../components/Footer/Footer';
 
+function Signup() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [address, setAddress] = useState("");
+  const [roll, setRoll] = useState("");
+  const [gender, setGender] = useState("female");
 
+  const signup = async () => {
+    if(!name){
+      alert("Name is required");
+      return;
+    }
 
-const Signup = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    mobile: '',
-    password: '',
-  });
+    if(!email){
+      alert("Email is required");
+      return;
+    }
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    if(!password){
+      alert("Password is required");
+      return;
+    }
+
+    if(!mobile){
+      alert("Mobile is required");
+      return;
+    }
+
+    if(!address){
+      alert("Address is required");
+      return;
+    }
+
+    const response = await axios.post("/signup", {
+      name: name,
+      email: email,
+      password: password,
+      mobile: mobile,
+      address: address,
+      gender: gender,
+      roll: roll
+    })
+
+    alert(response?.data?.message);
+
+    if(response?.data?.success){
+      window.location.href = "/login";
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission logic here
-    console.log('Form submitted:', formData);
-  };
+  useEffect(()=>{
+    const storageUser = JSON.parse(localStorage.getItem("user") || '{}');
+
+    if(storageUser?.email){
+      alert("You are already logged in!");
+      window.location.href = "/";
+    }
+
+  }, [])
 
   return (
-    <>
-    <Navbar />
-    <div className="signup-container">
-      <form onSubmit={handleSubmit} className="signup-form">
-        <h2 className="form-title">Sign Up</h2>
+    <div>
+      <Navbar />
+      <form className="signup-form">
+        <h1 className='text-center'>Signup</h1>
 
-        <label className="label">
-          Name:
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            className="input-field"
-            required
-          />
-        </label>
+        <div>
+          <label htmlFor="name">Name</label>
+          <input type="text"
+            placeholder="Enter your name"
+            id="name"
+            className="form-control"
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+            }} />
+        </div>
 
-        <label className="label">
-          Email:
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="input-field"
-            required
-          />
-        </label>
+        <div>
+          <label htmlFor="email">Email</label>
+          <input type="email"
+            placeholder="Enter your email"
+            id="email"
+            className="form-control"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }} />
+        </div>
 
-        <label className="label">
-          Number:
-          <input
-            type="tel"
-            name="mobile"
-            value={formData.mobile}
-            onChange={handleChange}
-            className="input-field"
-            required
-          />
-        </label>
+        <div>
+          <label htmlFor="password">Password</label>
+          <input type="password"
+            placeholder="Enter your password"
+            id="password"
+            className="form-control"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }} />
+        </div>
 
-        <label className="label">
-          Password:
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            className="input-field"
-            required
-          />
-        </label>
+        <div>
+          <label htmlFor="mobile">Mobile</label>
+          <input type="text"
+            placeholder="Enter your mobile"
+            id="mobile"
+            className="form-control"
+            value={mobile}
+            onChange={(e) => {
+              setMobile(e.target.value);
+            }} />
+        </div>
 
-        <button type="submit" className="button">
-          Sign Up
+        <div>
+          <label htmlFor="address">Address</label>
+          <input type="text"
+            placeholder="Enter your address"
+            id="address"
+            className="form-control"
+            value={address}
+            onChange={(e) => {
+              setAddress(e.target.value);
+            }} />
+        </div>
+
+        <div>
+          <label htmlFor="roll">Roll</label>
+          <input type="roll"
+            placeholder="Enter your roll"
+            id="eoll"
+            className="form-control"
+            value={roll}
+            onChange={(e) => {
+              setRoll(e.target.value);
+            }} />
+        </div>
+
+        <div>
+          <input type="radio"
+                id='male'
+                name='gender'
+                className='gender'
+                checked={gender === "male"}
+                onClick={()=>{
+                  setGender("male");
+                }}
+                />
+          <label htmlFor='male'>Male</label>
+
+          <input type="radio"
+                id='female'
+                name='gender'
+                className='gender'
+                checked={gender === "female"}
+                onClick={()=>{
+                  setGender("female");
+                }}
+                />
+          <label htmlFor='female'>Female</label>
+        </div>
+
+        <button type="button"
+                className="btn signup-btn"
+                onClick={signup}>
+          Signup
         </button>
+
+        <p className="text-right">
+          <Link to="/login">Already have an account?</Link>
+        </p>
       </form>
     </div>
-    <Footer />
-    </>
-  );
-};
+  )
+}
 
-export default Signup;
+export default Signup
