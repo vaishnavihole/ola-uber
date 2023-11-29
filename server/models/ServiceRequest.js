@@ -1,40 +1,39 @@
 import { Schema, model } from "mongoose";
 
 const serviceRequestSchema = new Schema({
-    type: {
-        type: String,    
-    },
-    description : {
-        type: String,    
-    },
-    address: {
-        type: String,    
-    },
-    mobile: {
-        type: Number,    
-    },
-    user: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
-      },
+  type: {
+    type: String,
+  },
+  description: {
+    type: String,
+  },
+  address: {
+    type: String,
+  },
+  mobile: {
+    type: Number,
+  },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
 
-      status: {
-        type: 'String',
-        default: 'pending'
-      },
+  status: {
+    type: 'String',
+    default: 'pending'
+  },
 
-      charges: {
-        type: Number,
-      },
+  charges: {
+    type: Number,
+  },
 
-      provider: {
-        type: String,
-        default: ' '
-      }
-   
+  provider: {
+    type: String,
+    default: ' '
+  }
+
 }, {
-    timestamps: true 
+  timestamps: true
 });
 
 const ServiceRequest = model("ServiceRequest", serviceRequestSchema);

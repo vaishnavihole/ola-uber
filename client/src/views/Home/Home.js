@@ -1,5 +1,6 @@
 import React from 'react';
 import './Home.css';
+import { Link } from "react-router-dom";
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
 import delivaryBoy from './Images/delivary-boy.png';
@@ -20,7 +21,7 @@ function Home() {
           <div className='tagline-container'>
           <h1 className='tagline'>We make life of elderly people super easy by providing various services</h1> 
           </div>
-          <button type="button" className='book-btn'>Book Now</button>
+          <Link to="/booking" className='book-btn'>Book Now</Link>
         </div>
         
         <h3 className='feature-title' >Why You Should Choose Us</h3>

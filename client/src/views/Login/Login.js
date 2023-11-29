@@ -1,68 +1,79 @@
-import React, { useState } from 'react';
-import './Login.css';
+import React, {useState, useEffect} from 'react'
+import "./Login.css";
+import { Link } from "react-router-dom";
+import axios from "axios";
 import Navbar from '../../components/Navbar/Navbar';
-import Footer from '../../components/Footer/Footer';
 
-const Login = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
+function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
+  const login = async () =>{
+    const response = await axios.post("/login", {
+      email: email,
+      password: password
     });
-  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle login logic here
-    console.log('Login submitted:', formData);
-  };
+    alert(response?.data?.message);
+
+    if(response?.data?.success){
+      localStorage.setItem("user", JSON.stringify(response?.data?.data));
+      window.location.href = "/";
+    }
+  }
+
+  useEffect(()=>{
+    const storageUser = JSON.parse(localStorage.getItem("user") || '{}');
+
+    if(storageUser?.email){
+      alert("You are already logged in!");
+      window.location.href = "/";
+    }
+
+  }, [])
 
   return (
-    <>
-    <Navbar />
-      <div className="login-container">
-        <form onSubmit={handleSubmit} className="login-form">
-          <h2 className="form-title">Login</h2>
+    <div>
+      <Navbar />
+      <form className="login-form">
+        <h1 className='text-center'>Login</h1>
 
-          <label className="label">
-            Email:
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="input-field"
-              required
-            />
-          </label>
+        <div>
+          <label htmlFor="email">Email</label>
+          <input type="email"
+            placeholder="Enter your email"
+            id="email"
+            className="form-control"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }} />
+        </div>
 
-          <label className="label">
-            Password:
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="input-field"
-              required
-            />
-          </label>
+        <div>
+          <label htmlFor="password">Password</label>
+          <input type="password"
+            placeholder="Enter your password"
+            id="password"
+            className="form-control"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }} />
+        </div>
 
-          <button type="submit" className="button">
-            Login
-          </button>
-        </form>   
-      </div>
-      <Footer />
-  
-    </>
-  );
-};
+        <button type="button" className="btn login-btn"
+          onClick={login} >
+          Login
+        </button>
 
-export default Login;
+        <p className="text-right">
+          <Link to="/signup">Create a new account?</Link>
+        </p>
+
+      </form>
+    </div>
+  )
+}
+
+export default Login
